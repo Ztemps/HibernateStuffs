@@ -33,39 +33,57 @@ public class ClienteDao {
 		}
 		return cliente;
 	}
-	
-	
-	public List<Cliente> getClientes() throws HibernateException{
-		
-		List<Cliente> listaClientes = null;		
-		
+
+	public List<Cliente> getClientes() throws HibernateException {
+
+		List<Cliente> listaClientes = null;
+
 		try {
 			session.beginTransaction();
 			Query query = session.createQuery("from Cliente");
 			listaClientes = (List<Cliente>) query.list();
-						
+
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			throw e;
-		}finally {
+		} finally {
 			if (session.isOpen()) {
 				session.close();
 			}
 		}
-		
+
 		return listaClientes;
-		
+
 	}
-	
-	
-	public void modifyCliente(Cliente cliente) throws Exception{
-		
-		
-		
-		
+
+	public Cliente modifyCliente(Cliente cliente) throws HibernateException {
+
+		try {
+
+			session.beginTransaction();
+			Query query = session.createQuery(
+					"update Cliente set nombre = :nombre, apellidos = :apellidos , dni = :dni where idCliente= :idcliente ");
+
+			query.setParameter("nombre", cliente.getNombre());
+			query.setParameter("apellidos", cliente.getApellidos());
+			query.setParameter("dni", cliente.getDni());
+			query.setParameter("idcliente", cliente.getIdCliente());
+			query.executeUpdate();
+
+			session.getTransaction().commit();
+
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if (session.isOpen()) {
+				session.close();
+			}
+		}
+
+		return cliente;
+
 	}
-		
-	
-	
-	
+
 }

@@ -26,4 +26,15 @@ public class ClienteDaoTest {
 		
 	}
 	
+	
+	@Test
+	public void modify3Cliente (){
+		
+		Cliente cliente = new Cliente("Paco","Paquito","007");
+		
+		assertNotNull(clienteDao.modifyCliente(cliente));
+
+		
+	}
+	
 }
