@@ -1,4 +1,4 @@
-package com.netmind.dao;
+package com.netmind.dao.annotations;
 
 import java.util.List;
 
